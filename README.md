@@ -30,6 +30,12 @@ Java 版本为`Java 17`
 `store` 项目存储区域
 `utils` 常用工具库
 
+### 修改 App 版本号
+
+如要升级发新版本的话，请在`app.json`中修改`verison`值，此项目已在 android/app/src/build.gradle 中进行封装
+
+如要自定义封装，请修改文件中`versionName`值
+
 ## 声明
 
 本项目仅用于自身学习开发记录，严禁商用！

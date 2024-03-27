@@ -1,9 +1,9 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {Provider} from 'react-redux';
 import {BackHandler} from 'react-native';
-import {message} from '@components';
-import Router from '@router';
-import store from '@store';
+import {message} from 'components';
+import Router from 'router';
+import store from 'store';
 import {NavigationContainer} from '@react-navigation/native';
 
 const App = () => {
@@ -12,17 +12,12 @@ const App = () => {
   const [lastBackPressed, setLastBackPressed] = useState('');
 
   const rootRoute = ['Login', 'Home', '/']; // 不退出,返回上一页配置内容
-  const cantRoute = ['Work', 'dayPages', 'FinancialList']; // 不做任何处理 由自己当前页处理
   // 一般都为webView
 
   const handleBackPress = () => {
     const navigation = navigationRef.current;
 
     let routeName = navigation.getCurrentRoute();
-
-    if (cantRoute.includes(routeName.name)) {
-      return;
-    }
 
     if (!rootRoute.includes(routeName.name)) {
       navigation.goBack();

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Dimensions, Toast, Modal} from 'react-native';
-import IconSet from '@components/IconSet';
+import IconSet from './IconSet';
 
 /**
  *
@@ -29,28 +29,7 @@ const ModalToast = ({
   );
 };
 
-/**
- *
- * @param {params} content 可接受react组件
- * @param {params} duration 显示时间
- * @param {params} mask 是否显示透明蒙层，防止触摸穿透
- * @param {params} stackable 是否允许叠加显示
- */
-const toast = function ({
-  mask = false,
-  stackable = true,
-  duration = 1.5,
-  content = '',
-}) {
-  Toast.info({
-    content,
-    mask,
-    stackable,
-    duration,
-  });
-};
-
-const message = {
+const Message = {
   suscess(text = '') {
     Toast.info({
       content: (
@@ -152,4 +131,4 @@ const AffirmToast = ({
 
 Message.confirm = AffirmToast;
 
-export {toast, ModalToast, Message, message};
+export {ModalToast, Message};

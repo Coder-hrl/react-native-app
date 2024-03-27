@@ -1,0 +1,58 @@
+{
+  "id": "3087120",
+  "name": "毕设  小学管理",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "27424909",
+      "name": "每日填报",
+      "font_class": "meiritianbao1",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "4329376",
+      "name": "订单管理",
+      "font_class": "dingdanguanli",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "8508336",
+      "name": "库存管理",
+      "font_class": "kucunguanli",
+      "unicode": "e689",
+      "unicode_decimal": 59017
+    },
+    {
+      "icon_id": "39690810",
+      "name": "纸箱",
+      "font_class": "a-dakaidehezihuowu",
+      "unicode": "e799",
+      "unicode_decimal": 59289
+    },
+    {
+      "icon_id": "11372716",
+      "name": "我的",
+      "font_class": "wode1",
+      "unicode": "e8bb",
+      "unicode_decimal": 59579
+    },
+    {
+      "icon_id": "22382172",
+      "name": "计算费用",
+      "font_class": "jisuanfeiyong",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "521048",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    }
+  ]
+}

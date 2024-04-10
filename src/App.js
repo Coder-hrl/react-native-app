@@ -1,10 +1,12 @@
-import React, {useEffect, useState, useRef} from 'react';
 import {Provider} from 'react-redux';
-import {BackHandler} from 'react-native';
-import {message} from 'components';
+import {BackHandler, DevSettings, LogBox} from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
+
 import Router from 'router';
 import store from 'store';
-import {NavigationContainer} from '@react-navigation/native';
+import {message} from 'components';
 
 const App = () => {
   const navigationRef = useRef();
@@ -13,6 +15,10 @@ const App = () => {
 
   const rootRoute = ['Login', 'Home', '/']; // 不退出,返回上一页配置内容
   // 一般都为webView
+
+  const connectToRemoteDebugger = debug => {
+    NativeDevSettings.setIsDebuggingRemotely(debug);
+  };
 
   const handleBackPress = () => {
     const navigation = navigationRef.current;
@@ -48,6 +54,18 @@ const App = () => {
   }, [lastBackPressed]);
 
   useEffect(() => {
+    if (__DEV__) {
+      DevSettings.addMenuItem('debug', () => {
+        connectToRemoteDebugger(true);
+      });
+
+      DevSettings.addMenuItem('stop debug', () => {
+        connectToRemoteDebugger(false);
+      });
+
+      // 根据字符串匹配来忽略日志信息
+      LogBox.ignoreLogs(['Warning: ...']);
+    }
     return function () {
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
       window.navigation = null;

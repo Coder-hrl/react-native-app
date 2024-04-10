@@ -74,6 +74,13 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
+project.ext.vectoricons = [
+    iconFontsDir: "../../src/assets/fonts",
+    iconFontNames: [ 'iconfont.ttf' ]
+]
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 def getAppVersion(){
     def inputFile = new File("../app.json")
     def packageJson = new JsonSlurper().parseText(inputFile.text)

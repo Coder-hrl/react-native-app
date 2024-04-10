@@ -29,7 +29,7 @@ const ModalToast = ({
   );
 };
 
-const Message = {
+const message = {
   suscess(text = '') {
     Toast.info({
       content: (
@@ -80,7 +80,7 @@ const Message = {
   },
 };
 
-const AffirmToast = ({
+const ConfirmToast = ({
   visible,
   title,
   loading,
@@ -129,6 +129,4 @@ const AffirmToast = ({
   );
 };
 
-Message.confirm = AffirmToast;
-
-export {ModalToast, Message};
+export {ModalToast, ConfirmToast, message};

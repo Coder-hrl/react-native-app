@@ -1,10 +1,5 @@
-import {configureStore} from '@reduxjs/toolkit';
-import {routeReducer} from './storeSlice';
+export * from './storeSlice';
 
-const store = configureStore({
-  reducer: {
-    route: routeReducer,
-  },
-});
+import store from './store';
 
 export default store;

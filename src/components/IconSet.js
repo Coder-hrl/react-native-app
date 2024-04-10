@@ -1,5 +1,6 @@
 import createIconSet from 'react-native-vector-icons/lib/create-icon-set';
 import fontConfig from 'assets/fonts/iconfont.json';
+
 let glyphMap = {};
 
 fontConfig.glyphs.forEach(item => {

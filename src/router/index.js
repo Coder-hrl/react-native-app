@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View} from '@ant-design/react-native';
 
 import {
   createStackNavigator,
@@ -7,50 +8,70 @@ import {
 } from '@react-navigation/stack';
 
 import {useNavigation} from '@react-navigation/native';
-import {TabBar} from 'components';
+import {Center, TabBar} from 'components';
 import routes from './router.config';
 
 const Stack = createStackNavigator();
 
 const StartPage = () => {
+  const navigation = useNavigation();
+
+  // 假登录
+  const Login = () => {
+    navigation.push('Home');
+  };
+
   return (
-    <View>
-      <Text>启动页</Text>
-    </View>
+    <Center>
+      <Image source={require('images/start.png')} />
+      <TouchableOpacity onPress={Login} style={styles.entryIcon}>
+        <View style={styles.entryText}>立即进入</View>
+      </TouchableOpacity>
+    </Center>
   );
 };
 
 function Router() {
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    // navigation.navigate('Login');
-  }, []);
+  useEffect(() => {}, []);
 
   return (
-    <View>
-      <Stack.Navigator
-        initialRouteName="Start"
-        screenOptions={{
-          headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-        onNavigationStateChange={e => {
-          console.log(e);
-        }}>
-        <Stack.Screen name="Start" component={StartPage}></Stack.Screen>
-        <Stack.Screen name="Home" component={TabBar}></Stack.Screen>
-        {routes.map(item => {
-          return (
-            <Stack.Screen
-              name={item.name}
-              component={item.component}
-              key={item.name}></Stack.Screen>
-          );
-        })}
-      </Stack.Navigator>
-    </View>
+    <Stack.Navigator
+      initialRouteName="Start"
+      screenOptions={{
+        headerShown: false,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}
+      onNavigationStateChange={e => {
+        console.log(e);
+      }}>
+      <Stack.Screen name="Start" component={StartPage}></Stack.Screen>
+      <Stack.Screen name="Home" component={TabBar}></Stack.Screen>
+      {routes.map(item => {
+        return (
+          <Stack.Screen
+            name={item.name}
+            component={item.component}
+            key={item.name}
+          />
+        );
+      })}
+    </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  entryIcon: {
+    marginTop: 20,
+    width: 200,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#D9ECFE',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  entryText: {
+    fontSize: 20,
+  },
+});
 
 export default Router;

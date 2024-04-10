@@ -1,6 +1,7 @@
 import IconSet from './IconSet';
-import * as message from './message';
-import LayoutWrapper from './LayoutWrapper';
 import TabBar from './TabBar';
+import LayoutWrapper from './LayoutWrapper';
 
-export {IconSet, message, LayoutWrapper, TabBar};
+export * from './Flex';
+export {ModalToast, ConfirmToast, message} from './message';
+export {IconSet, LayoutWrapper, TabBar};

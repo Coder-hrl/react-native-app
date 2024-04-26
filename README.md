@@ -36,7 +36,9 @@ Java 版本为`Java 17`
 
 默认组件库 `rn.antd` 仓库
 
-storage 管理 `react-native-mmkv`
+使用 echarts 组件库为 `@wuba/react-native-echarts`
+
+storage 管理 `@react-native-async-storage/async-storage`
 
 ### 修改 App 版本号
 
@@ -45,6 +47,10 @@ storage 管理 `react-native-mmkv`
 如果要更新字体和图标样式，请在`assets/fonts`中进行修改
 
 如要自定义封装，请修改文件中`versionName`值
+
+本项目所使用 hooks 使用 ahooks 进行完善开发
+
+所使用的组件库为 rn.antd 组件库
 
 ## 声明
 

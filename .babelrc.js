@@ -20,5 +20,3 @@ module.exports = {
     ['import', {libraryName: '@ant-design/react-native'}],
   ],
 };
-
-// http://gitlab.yisa.com.cn:10130/huangrl/haigang_app.git

@@ -2,9 +2,27 @@
 
 ## 项目介绍
 
-本项目基于 React-native（0.73.6）开发并实践，后续会逐步完善这个项目，并添加上常用库和常用功能
+本项目基于 React-native（0.73.6）开发并实践，后续会逐步完善这个项目，并添加上常用库和常用功能。**目前仅支持 Android 版本**
+
+> 请在使用前阅读该 README 文件，以达到最好的使用效果
 
 > 由于 react-native 版本为 0.73.6 官方不再推荐使用 chrome 远程来进行调试，推荐使用 fliper
+
+## 所使用技术栈
+
+react-native 0.73.6
+
+ahooks
+
+antd/rn
+
+axios
+
+dayjs
+
+@react-navigation/stack
+
+@reduxjs/toolkit
 
 ### 组件
 
@@ -44,13 +62,11 @@ storage 管理 `@react-native-async-storage/async-storage`
 
 如要升级发新版本的话，请在`app.json`中修改`verison`值，此项目已在 android/app/src/build.gradle 中进行封装
 
+如要自定义封装 App 版本号，请修改文件中`versionName`值
+
 如果要更新字体和图标样式，请在`assets/fonts`中进行修改
 
-如要自定义封装，请修改文件中`versionName`值
-
 本项目所使用 hooks 使用 ahooks 进行完善开发
-
-所使用的组件库为 rn.antd 组件库
 
 ## 声明
 

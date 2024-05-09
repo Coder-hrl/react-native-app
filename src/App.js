@@ -42,10 +42,7 @@ const App = () => {
 
     let date = Date.now();
     setLastBackPressed(date);
-    message.info({
-      content: '再次返回退出应用',
-      mask: false,
-    }); //提示再次按返回触发
+    message.warning('再次返回退出应用'); //提示再次按返回触发
     return true;
   };
 

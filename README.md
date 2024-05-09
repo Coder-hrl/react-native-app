@@ -6,23 +6,11 @@
 
 > 请在使用前阅读该 README 文件，以达到最好的使用效果
 
-> 由于 react-native 版本为 0.73.6 官方不再推荐使用 chrome 远程来进行调试，推荐使用 fliper
+> 由于 react-native 版本为 0.73.6 官方`不再推荐使用 chrome 远程来进行调试`，推荐使用 fliper ，内部通过设置，已`假还原`了 0.68 的 debug 菜单栏，目前仍然推荐使用 `react-native-debugger` 来监控网络请求
 
 ## 所使用技术栈
 
-react-native 0.73.6
-
-ahooks
-
-antd/rn
-
-axios
-
-dayjs
-
-@react-navigation/stack
-
-@reduxjs/toolkit
+目前所使用库为 `ahooks`,`antd/rn`,`axios`,`dayjs`,`redux` 等常见库
 
 ### 组件
 

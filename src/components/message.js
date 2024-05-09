@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, Text, Dimensions, Toast, Modal} from 'react-native';
+import {View} from '@ant-design/react-native';
+import {Dimensions, Modal} from 'react-native';
+import {Toast} from '@ant-design/react-native';
 import IconSet from './IconSet';
 
 /**
@@ -30,20 +32,20 @@ const ModalToast = ({
 };
 
 const message = {
-  suscess(text = '') {
+  success(text = '') {
     Toast.info({
       content: (
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <IconSet
             style={{color: '#00cc66', fontSize: 20, marginRight: 5}}
-            name="duihao"
+            name="fill-wancheng-yuan"
           />
-          <Text style={{color: '#fff'}}>{text}</Text>
+          <View style={{color: '#fff'}}>{text}</View>
         </View>
       ),
       mask: false,
       stackable: true,
-      duration: 1.5,
+      duration: 3,
     });
   },
   error(text = '') {
@@ -52,9 +54,9 @@ const message = {
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <IconSet
             style={{color: '#ff5b4d', fontSize: 20, marginRight: 5}}
-            name="jingshitishi"
+            name="fill-guanbi-yuan"
           />
-          <Text style={{color: '#fff'}}>{text}</Text>
+          <View style={{color: '#fff'}}>{text}</View>
         </View>
       ),
       mask: false,
@@ -68,15 +70,18 @@ const message = {
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <IconSet
             style={{color: '#fab933', fontSize: 20, marginRight: 5}}
-            name="jingshitishi"
+            name="fill-jinggao-yuan"
           />
-          <Text style={{color: '#fff'}}>{text}</Text>
+          <View style={{color: '#fff'}}>{text}</View>
         </View>
       ),
       mask: false,
       stackable: true,
-      duration: 1.5,
+      duration: 3,
     });
+  },
+  loading(text = 'Loading...') {
+    Toast.loading(text, 0);
   },
 };
 

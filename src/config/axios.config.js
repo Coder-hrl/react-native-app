@@ -1,32 +1,34 @@
 import axios from 'axios';
+
 import AJAXMODE from 'AjaxMode';
 import {message} from 'components';
-import {removeItem, getItem} from './storage';
+import {dev, prod} from './app.config';
+import {removeItem, getItem, setItem} from './storage';
+// 通用接口请求地址路径
 
-// let baseURL = config.baseURL;
-// window.loginUrl = config.loginUrl;
-
-let ip = '';
-
-axios.defaults.baseURL = ip + '';
 axios.defaults.timeout = 30000;
+if (AJAXMODE === 'dev') {
+  axios.defaults.baseURL = dev;
+} else {
+  axios.defaults.baseURL = prod;
+}
 
-getItem('token').then(res => {});
-
-getItem('user').then(res => {});
+getItem('token').then(res => {
+  if (res) {
+    if (AJAXMODE !== 'agent') {
+      axios.defaults.headers.common['Authorization'] = res;
+    } else {
+      axios.defaults.headers.common['token'] = res;
+    }
+  }
+});
 
 /**
  * @description  请求全局拦截
  * @param  {boolean} transFormData  post方法 true转form提交表单方式
  * */
 axios.interceptors.request.use(
-  config => {
-    if (config.data && config.data.transFormData) {
-      config.headers['Content-Type'] =
-        'application/x-www-form-urlencoded;charset=utf-8';
-      delete config.data.transFormData;
-      // config.data = qs.stringify(config.data);
-    }
+  async config => {
     return config;
   },
   error => {
@@ -34,64 +36,64 @@ axios.interceptors.request.use(
   },
 );
 
+axios.interceptors.response.use(async res => {
+  return res;
+});
+
 /**
  * @description ajax 请求
  * @param {Object} ajaxData 配置 ajax 请求的键值对集合
  * @param {String} ajaxData.type 创建请求使用的方法
  * @param {String} ajaxData.url 请求服务器的 URL
  * @param {Object} ajaxData.data 与请求一起发送的 URL 参数
+ * @param {Boolean} ajaxData.manual 与请求一起发送的 URL 参数
  */
 function ajax(ajaxData = {}) {
   // post转form表单提交方式
   if (ajaxData.transFormData) {
     ajaxData.data = {...ajaxData.data, transFormData: true};
   }
+  let method = (ajaxData.type || 'GET').toLowerCase();
+
+  let url = ajaxData.url || '';
+
+  let data = method === 'get' ? {params: ajaxData.data} : ajaxData.data;
 
   return new Promise((resolve, reject) => {
     if (Object.prototype.toString.call(ajaxData) !== '[object Object]') {
       return reject(new Error('ajax请求配置错误'));
     }
-    let method = (ajaxData.type || 'GET').toLowerCase();
 
-    let data =
-      method === 'get' ? {params: ajaxData.data} : {data: ajaxData.data};
-
-    let obj = {
-      ...ajaxData,
-      method,
-      ...data,
-    };
-
-    delete obj.type;
-
-    axios(obj)
+    axios[method](url, data)
       .then(res => {
-        if (
-          res.data.code === 30008 ||
-          res.data.code === 30009 ||
-          res.data.code === 40005 ||
-          res.data.code === 40006 ||
-          res.data.code === 40001
-        ) {
-          loginOut();
+        if (res.data.code === 40102) {
+          removeItem('token').then(token => {
+            // 刷新token
+            ajax({
+              url: '/app/app-login',
+              type: 'post',
+              data: {token},
+            }).then(res => {
+              setItem('token', res.data.token);
+              setAjaxHeader(res.data.token);
+            });
+          });
         } else {
-          resolve(res.data);
+          if (res.data.code === 20000) {
+            resolve(res.data);
+          } else {
+            if (ajaxData.manual) {
+              resolve(res.data);
+            } else {
+              message.error(res.data.message);
+            }
+          }
         }
-        //  else {
-        //   reject(res)
-        // }
       })
       .catch(err => {
-        debugger;
         let response = err.response;
         if (response) {
           switch (response.code) {
-            case 401:
-              loginOut();
-              break;
-            case 308:
-              loginOut();
-              break;
             case 500:
               message.error('服务器响应失败');
               break;
@@ -105,25 +107,13 @@ function ajax(ajaxData = {}) {
   });
 }
 
-const setAjaxHeader = (key, value) => {
-  axios.defaults.headers.common[key] = value;
-};
-
-const loginOut = () => {
-  removeItem('token');
-  removeItem('user');
-
-  // 防止多次退出登录
-  let nowRoute = RootNavigation?.navigationRef?.current?.getCurrentRoute();
-
-  if (nowRoute?.name == 'Login') {
-    return;
+// 设置axios默认的token值
+const setAjaxHeader = value => {
+  if (AJAXMODE !== 'prod') {
+    axios.defaults.headers.common['Authorization'] = value;
+  } else {
+    axios.defaults.headers.common['token'] = value;
   }
-
-  RootNavigation.reset('Login');
-
-  message.warning('登录失效请重新登录');
 };
 
-export default ajax;
-export {setAjaxHeader};
+export {ajax, setAjaxHeader};

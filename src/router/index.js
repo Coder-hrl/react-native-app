@@ -17,14 +17,14 @@ const StartPage = () => {
   const navigation = useNavigation();
 
   // 假登录
-  const Login = () => {
-    navigation.push('Home');
+  const jumpLogin = () => {
+    navigation.push('Login');
   };
 
   return (
     <Center>
       <Image source={require('images/start.png')} />
-      <TouchableOpacity onPress={Login} style={styles.entryIcon}>
+      <TouchableOpacity onPress={jumpLogin} style={styles.entryIcon}>
         <View style={styles.entryText}>立即进入</View>
       </TouchableOpacity>
     </Center>
@@ -44,8 +44,8 @@ function Router() {
       onNavigationStateChange={e => {
         console.log(e);
       }}>
-      <Stack.Screen name="Start" component={StartPage}></Stack.Screen>
-      <Stack.Screen name="Home" component={TabBar}></Stack.Screen>
+      <Stack.Screen name="Start" component={StartPage} />
+      <Stack.Screen name="Home" component={TabBar} />
       {routes.map(item => {
         return (
           <Stack.Screen

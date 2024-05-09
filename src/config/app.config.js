@@ -2,7 +2,7 @@ import Home from 'pages/Home';
 import Mine from 'pages/Mine';
 import WorkSpace from 'pages/WorkSpace';
 
-const tabBarConfig = [
+export const tabBarConfig = [
   {
     name: '首页',
     icon: 'shouye',
@@ -23,4 +23,8 @@ const tabBarConfig = [
   },
 ];
 
-export {tabBarConfig};
+// 开发地址
+export const dev = '';
+
+// 生产地址
+export const prod = '';

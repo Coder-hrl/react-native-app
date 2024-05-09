@@ -11,8 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {ajax} from 'config';
-import {Center, LayoutWrapper, EarlyWarningCard} from 'components';
-import {navConfig, workConfig, iconObj} from './index.config';
+import {Center, LayoutWrapper} from 'components';
 
 import bgc from 'assets/images/Home/bgc.png';
 import arrow from 'assets/images/Home/arrow.png';
@@ -23,50 +22,11 @@ function Home() {
   const navigation = useNavigation();
   const HomeScrollRef = useRef();
 
-  const [navInfo, setNavInfo] = useState({});
-  const [navList, setNavList] = useState(workConfig);
   const [gradientColor, setGradientColor] = useState([
     'rgba(218, 237, 254, 0)',
     'rgba(252, 255, 249, 0)',
   ]);
   const [titleShow, setTitleShow] = useState(false);
-
-  const {run: getNavData} = useRequest(
-    () =>
-      ajax({
-        url: '/app/get-nav-data',
-        type: 'get',
-        data: {},
-      }),
-    {
-      manual: true,
-      onSuccess: res => {
-        setNavInfo(res.data);
-      },
-      onError: err => {
-        console.log(err);
-      },
-    },
-  );
-
-  const {run: getNavigationData} = useRequest(
-    () =>
-      ajax({
-        url: '/app/get-navigation-data',
-        type: 'get',
-        data: {},
-      }),
-    {
-      manual: true,
-      onSuccess: res => {
-        console.log(res);
-        setNavList(res.data);
-      },
-      onError: err => {
-        console.log(err);
-      },
-    },
-  );
 
   const fastJump = path => {
     navigation.push(path);
@@ -89,20 +49,17 @@ function Home() {
     ]);
   };
 
-  useMount(() => {
-    getNavData();
-    getNavigationData();
-  });
+  useMount(() => {});
 
   const renderTitle = () => {
     return (
       <Fragment>
-        <View style={styles.HomeTitle}>智慧海防安全</View>
+        <View style={styles.HomeTitle}>Coderh内容</View>
         <ImageBackground
           source={titleBgc}
           style={styles.titleBgc}
           resizeMode="contain">
-          <View style={{...styles.HomeTitle, color: '#273B5D'}}>管控平台</View>
+          <View style={{...styles.HomeTitle, color: '#273B5D'}}>演示平台</View>
         </ImageBackground>
       </Fragment>
     );
@@ -119,49 +76,19 @@ function Home() {
           <Flex style={{paddingLeft: 20}}>{renderTitle()}</Flex>
         ) : null}
       </LinearGradient>
-      <ScrollView
-        style={styles.HomeScroll}
-        ref={HomeScrollRef}
-        onScroll={onPgaeScroll}
-        showsVerticalScrollIndicator={false}>
-        <LayoutWrapper translucent showBgc={false}>
+      <LayoutWrapper translucent showBgc={false}>
+        <ScrollView
+          style={styles.HomeScroll}
+          ref={HomeScrollRef}
+          onScroll={onPgaeScroll}
+          showsVerticalScrollIndicator={false}>
           {/* 标题区域 */}
           <View style={styles.HomeTitleWrapper}>
             <Flex>{renderTitle()}</Flex>
           </View>
           {/* Nav栏 */}
-          <Flex style={styles.HomeNavWrapper}>
-            {navConfig.map(item => {
-              return (
-                <Center key={item.title} style={styles.NavItem}>
-                  <View>{item.title}</View>
-                  <Flex style={styles.NavItemBottom}>
-                    <View style={styles.NavItemValue}>
-                      {navInfo[item.dataIndex]}
-                    </View>
-                    <View style={styles.NavItemUnit}>{item.unit}</View>
-                  </Flex>
-                </Center>
-              );
-            })}
-          </Flex>
-
-          {/* 功能栏 */}
-          <Flex wrap="wrap" style={styles.ActionWrapper}>
-            {navList.map(item => {
-              return (
-                <TouchableOpacity
-                  key={item.path}
-                  style={styles.ActionItem}
-                  onPress={() => fastJump(item.path)}>
-                  <Image style={styles.ActionImg} source={iconObj[item.icon]} />
-                  <View style={styles.ActionItemText}>{item.title}</View>
-                </TouchableOpacity>
-              );
-            })}
-          </Flex>
-        </LayoutWrapper>
-      </ScrollView>
+        </ScrollView>
+      </LayoutWrapper>
     </ImageBackground>
   );
 }

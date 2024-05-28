@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Dimensions, Toast, Modal} from 'react-native';
+import {Dimensions, Modal, Text, Toast, View} from 'react-native';
 import IconSet from './IconSet';
 
 /**
@@ -12,7 +12,12 @@ import IconSet from './IconSet';
  */
 const ModalToast = ({
   text = '',
-  footer = [{text: '确认', onPress: () => {}}],
+  footer = [
+    {
+      text: '确认',
+      onPress: () => {},
+    },
+  ],
   onBackHandler = true,
   title = '',
   message = '',
@@ -22,7 +27,7 @@ const ModalToast = ({
     message ? (
       message
     ) : (
-      <Text style={{fontSize: dp2px(26), color: '#333333'}}>{text}</Text>
+      <Text style={{fontSize: 26, color: '#333333'}}>{text}</Text>
     ),
     footer,
     onBackHandler,
@@ -30,7 +35,7 @@ const ModalToast = ({
 };
 
 const message = {
-  suscess(text = '') {
+  success(text = '') {
     Toast.info({
       content: (
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -118,10 +123,10 @@ const ConfirmToast = ({
       </Text>
       <Text
         style={{
-          fontSize: dp2px(30),
+          fontSize: 30,
           color: '#333333',
-          marginBottom: dp2px(40),
-          marginTop: dp2px(10),
+          marginBottom: 40,
+          marginTop: 10,
         }}>
         {title}
       </Text>

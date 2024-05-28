@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
-import {TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {View} from '@ant-design/react-native';
 
 import {
-  createStackNavigator,
   CardStyleInterpolators,
+  createStackNavigator,
 } from '@react-navigation/stack';
 
 import {useNavigation} from '@react-navigation/native';
@@ -18,7 +18,7 @@ const StartPage = () => {
 
   // 假登录
   const Login = () => {
-    navigation.push('Home');
+    navigation.navigate('Home');
   };
 
   return (
@@ -44,8 +44,8 @@ function Router() {
       onNavigationStateChange={e => {
         console.log(e);
       }}>
-      <Stack.Screen name="Start" component={StartPage}></Stack.Screen>
-      <Stack.Screen name="Home" component={TabBar}></Stack.Screen>
+      <Stack.Screen name="Start" component={StartPage} />
+      <Stack.Screen name="Home" component={TabBar} />
       {routes.map(item => {
         return (
           <Stack.Screen

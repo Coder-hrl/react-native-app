@@ -127,6 +127,7 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    // 因fliper 中没有到 0.74.1 https://github.com/facebook/react-native/issues/41876
     implementation("com.facebook.react:flipper-integration")
 
     if (hermesEnabled.toBoolean()) {

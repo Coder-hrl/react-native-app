@@ -6,12 +6,13 @@ import {useNavigation} from '@react-navigation/native';
 
 import {removeItem} from 'config';
 import {
-  LayoutWrapper,
   Button,
+  LayoutHeader,
+  LayoutWrapper,
+  message,
+  ModalToast,
   RenderAction,
   RenderItem,
-  LayoutHeader,
-  ModalToast,
 } from 'components';
 
 import logo from 'assets/images/start.png';
@@ -38,6 +39,7 @@ function Mine() {
           text: '确认',
           onPress: () => {
             removeItem('token').then(res => {
+              message.success('操作成功！');
               navigation.navigate('Login');
             });
           },

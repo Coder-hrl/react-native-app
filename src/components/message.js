@@ -1,30 +1,31 @@
 import React from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
-import {Toast, View, Flex, Modal} from '@ant-design/react-native';
+import {Flex, Modal, Toast, View} from '@ant-design/react-native';
 import IconSet from './IconSet';
 
 /**
  *
- * @param {params} text 提示文字
- * @param {params} footer 底部按钮
- * @param {params} title 标题
+ * @param {string} text 提示文字
+ * @param {[{onPress: *, text: string}]} footer 底部按钮
+ * @param {string} title 标题
  * @param {params} cb 点击回调
- * @param {params} message 内容
+ * @param {string} message 内容
  */
 const ModalToast = ({
   text = '',
-  footer = [{text: '确认', onPress: () => {}}],
+  footer = [
+    {
+      text: '确认',
+      onPress: () => {},
+    },
+  ],
   onBackHandler = true,
   title = '',
   message = '',
 }) => {
   Modal.alert(
     title,
-    message ? (
-      message
-    ) : (
-      <View style={{fontSize: 16, color: '#333333'}}>{text}</View>
-    ),
+    message ? message : <View style={styles.modalTitle}>{text}</View>,
     footer,
     onBackHandler,
   );
@@ -67,18 +68,14 @@ const message = {
 const ConfirmToast = ({
   visible,
   title,
-  loading,
   onCancel = () => {},
   onSubmit = () => {},
 }) => {
   return (
     <Modal
       transparent
-      style={{width: Dimensions.get('window').width * 0.8}}
+      style={styles.modalConfirm}
       onClose={onCancel}
-      bodyStyle={{
-        padding: 0,
-      }}
       footer={[
         {
           text: '取消',
@@ -91,24 +88,8 @@ const ConfirmToast = ({
       ]}
       maskClosable
       visible={visible}>
-      <Text
-        style={{
-          fontSize: 18,
-          color: '#333333',
-          marginBottom: 9,
-          textAlign: 'center',
-        }}>
-        提示
-      </Text>
-      <Text
-        style={{
-          fontSize: 30,
-          color: '#333333',
-          marginBottom: 40,
-          marginTop: 10,
-        }}>
-        {title}
-      </Text>
+      <View style={styles.modalConfirmTip}>提示</View>
+      <View style={styles.modalConfirmTitle}>{title}</View>
     </Modal>
   );
 };
@@ -121,6 +102,25 @@ const styles = StyleSheet.create({
   messageContent: {
     maxWidth: 320,
     color: '#fff',
+  },
+  modalConfirm: {
+    width: Dimensions.get('window').width * 0.8,
+  },
+  modalConfirmTip: {
+    fontSize: 18,
+    color: '#333333',
+    marginBottom: 9,
+    textAlign: 'center',
+  },
+  modalConfirmTitle: {
+    fontSize: 30,
+    color: '#333333',
+    marginBottom: 40,
+    marginTop: 10,
+  },
+  modalTitle: {
+    fontSize: 16,
+    color: '#333333',
   },
 });
 

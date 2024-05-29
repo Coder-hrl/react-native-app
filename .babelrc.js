@@ -17,6 +17,5 @@ module.exports = {
       },
     ],
     ['import', {libraryName: '@ant-design/react-native'}],
-    'nativewind/babel',
   ],
 };

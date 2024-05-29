@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Flex} from '@ant-design/react-native';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {Flex, View} from '@ant-design/react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import zhankai from 'assets/images/zhankai.png';
+import arrow from 'assets/images/zhankai.png';
 
 function LayoutHeader({title, hasBack = true}) {
   return (
@@ -13,7 +13,7 @@ function LayoutHeader({title, hasBack = true}) {
       align="center">
       {hasBack ? (
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <FastImage source={zhankai} style={styles.zhankaiImg} />
+          <FastImage source={arrow} style={styles.arrowImg} />
         </TouchableOpacity>
       ) : null}
       <View style={styles.LayoutHeaderTitle}>{title}</View>
@@ -24,11 +24,10 @@ function LayoutHeader({title, hasBack = true}) {
 const styles = StyleSheet.create({
   LayoutHeader: {
     paddingBottom: 10,
-    paddingTop: 4,
     marginHorizontal: -20,
     backgroundColor: '#fff',
   },
-  zhankaiImg: {
+  arrowImg: {
     width: 24,
     height: 24,
     marginRight: 14,

@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
-import {View, Flex} from '@ant-design/react-native';
+import {KeyboardAvoidingView, StyleSheet, TouchableOpacity} from 'react-native';
+import {Flex, View} from '@ant-design/react-native';
 
-import {LayoutWrapper, Input, Button, IconSet, message} from 'components';
-import {useSetState, useBoolean} from 'ahooks';
+import {Button, IconSet, Input, LayoutWrapper, message} from 'components';
+import {useBoolean, useSetState} from 'ahooks';
 import {setAjaxHeader, setItem} from 'config';
 
 function Login({navigation = () => {}}) {
@@ -106,8 +106,8 @@ function Login({navigation = () => {}}) {
 
 const styles = StyleSheet.create({
   LeftIntroWrapper: {
-    marginTop: 60,
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop: 20,
     width: '90%',
   },
   rightIntroWrapper: {
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     width: 200,
     color: '#999999',
     textAlign: 'center',
-    marginTop: '40%',
+    marginTop: '30%',
   },
   passwordIcon: {
     fontSize: 20,

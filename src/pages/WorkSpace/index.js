@@ -1,5 +1,6 @@
+import React from 'react';
 import {View} from '@ant-design/react-native';
-import {LayoutWrapper, LayoutHeader} from 'components';
+import {LayoutHeader, LayoutWrapper} from 'components';
 
 function WorkSpace() {
   return (

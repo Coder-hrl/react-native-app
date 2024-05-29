@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./js/leaflet.css" />
+    <script src="./js/leaflet.js"></script>
+
+    <script>
+      (function () {
+        L.CustomTileLayer = L.TileLayer.extend({
+          initialize: function (url, options) {
+            L.TileLayer.prototype.initialize.call(this, url, options);
+            L.setOptions(options);
+          },
+
+          createTile: function (coords) {
+            const radomId = Math.random().toString();
+            const tile = document.createElement('img');
+            if (this.options.crossOrigin || this.options.crossOrigin === '') {
+              tile.crossOrigin =
+                this.options.crossOrigin === true
+                  ? ''
+                  : this.options.crossOrigin;
+            }
+
+            if (typeof this.options.referrerPolicy === 'string') {
+              tile.referrerPolicy = this.options.referrerPolicy;
+            }
+            tile.alt = '';
+            tile.id = radomId;
+            // 通过地图的idimage来查询
+            const data = this.getTileData(coords);
+
+            const obj = {
+              id: radomId,
+              data,
+            };
+
+            window.ReactNativeWebView.postMessage(JSON.stringify(obj));
+
+            return tile;
+          },
+
+          getTileData: function (coords) {
+            let data = {
+              r: L.Browser.retina ? '@2x' : '',
+              s: this._getSubdomain(coords),
+              x: coords.x,
+              y: coords.y,
+              z: this._getZoomForUrl(),
+            };
+            if (this._map && !this._map.options.crs.infinite) {
+              var invertedY = this._globalTileRange.max.y - coords.y;
+              if (this.options.tms) {
+                data['y'] = invertedY;
+              }
+              data['-y'] = invertedY;
+            }
+            return data;
+          },
+        });
+        L.customTileLayer = function (url, options) {
+          return new L.CustomTileLayer(url, options);
+        };
+      })();
+    </script>
+
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map" style="width: 100%; height: 100%"></div>
+
+    <script>
+      var pointsArr = [];
+
+      window.onload = function () {
+        window.map = L.map('map', {
+          attributionControl: false,
+          zoomControl: false,
+          scrollWheelZoom: true,
+          doubleClickZoom: false,
+        }).setView([35.943383, 120.186752], 15);
+
+        var tileLayer = L.customTileLayer('', {
+          maxZoom: 18,
+          minZoom: 9,
+        }).addTo(map);
+
+        window.setSrc = function (id, img) {
+          document.getElementById(id).src = img;
+        };
+      };
+
+      const addMarker = function (center, iconOpt) {
+        if (window.markerOne) {
+          map.removeLayer(window.markerOne);
+        }
+
+        window.markerOne = L.marker(center, {
+          icon: iconOpt,
+        }).addTo(map);
+
+        map.panTo(center);
+        if (pointsArr.length) {
+          map.setView(center, 10);
+        } else {
+          map.setView(center, 16);
+        }
+      };
+
+      window.addCurrentPosMarker = function (center) {
+        var iconOpt = L.icon({
+          iconUrl: './images/mine.png',
+          iconSize: [18, 27],
+          iconAnchor: [15, 24],
+          popupAnchor: [20, -15],
+        });
+
+        addMarker(center, iconOpt);
+      };
+
+      window.addBoatMarker = function (latsArr, lngsArr) {
+        const lats = JSON.parse(latsArr);
+
+        const lngs = JSON.parse(lngsArr);
+
+        if (pointsArr.length) {
+          clearPoints();
+        }
+
+        lats.forEach((item, index) => {
+          var one = L.marker([item, lngs[index]], {
+            icon:
+              lats.length >= 2
+                ? L.divIcon({
+                    html: `<div style="position: relative; width: 12px; height: 18px"><img src="./images/boat.png" alt="" /><div style="width:40px;height:20px;position: absolute;top: -100%;left: 50%;margin-left: -20px;color: #222226;background-color: #fff;font-size: 12px;border-radius:8px;display: flex;align-items: center;justify-content: center;padding: 0 5px;box-shadow: 0px 0px 5px rgba(0,0,0,0.2);">${
+                      index + 1
+                    }号船</div></div>`,
+                    className: 'my-div-icon',
+                    iconSize: [12, 18],
+                    iconAnchor: [15, 24],
+                    popupAnchor: [20, -15],
+                  })
+                : L.icon({
+                    iconUrl: './images/boat.png',
+                    iconSize: [12, 18],
+                    iconAnchor: [15, 24],
+                    popupAnchor: [20, -15],
+                  }),
+          }).addTo(map);
+
+          map.setView([lats[index], lngs[index]], 10);
+
+          pointsArr.push(one);
+        });
+      };
+
+      var clearPoints = function () {
+        for (var i = 0; i < pointsArr.length; i++) {
+          pointsArr[i].remove();
+        }
+        pointsArr = [];
+      };
+
+      // 画线和标记
+      window.addPolyLine = function (latlngs, arr) {
+        if (pointsArr.length) {
+          clearPoints();
+        }
+        map.setZoom(10);
+        latlngs = JSON.parse(latlngs);
+        arr = JSON.parse(arr);
+
+        var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+        pointsArr.push(polyline);
+
+        // zoom the map to the polyline
+        map.fitBounds(polyline.getBounds());
+
+        var iconOpt = L.icon({
+          iconUrl: './images/department_icon.png',
+          iconSize: [29, 37],
+          iconAnchor: [19, 38],
+          popupAnchor: [20, -15],
+        });
+
+        arr.forEach((item, index) => {
+          var one = L.marker([item.lat, item.lng], {
+            icon: L.divIcon({
+              html: `<div style="position: relative; width: 29px; height: 37px"><img src="./images/bg.png" alt="" /><div style="position: absolute;top: 38%;left: 50%;transform: translate(-50%, -50%);color: aliceblue;font-size: 12px;">${
+                index + 1
+              }</div></div>`,
+              className: 'my-div-icon',
+              iconSize: [40, 40],
+              iconAnchor: [14, 34],
+              popupAnchor: [20, -15],
+            }),
+          }).addTo(map);
+
+          map.panTo([item.lat, item.lng]);
+
+          pointsArr.push(one);
+        });
+      };
+
+      window.setPosition = function (center) {
+        map.panTo(center);
+      };
+    </script>
+  </body>
+</html>

@@ -3,6 +3,7 @@ import {BackHandler, DevSettings, LogBox} from 'react-native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
+import {Provider as AntdProvider} from '@ant-design/react-native';
 
 import Router from 'router';
 import store from 'store';
@@ -10,7 +11,6 @@ import {message} from 'components';
 
 const App = (callback, deps) => {
   const navigationRef = useRef();
-  const navigation = useNavigation();
 
   const [lastBackPressed, setLastBackPressed] = useState('');
 
@@ -23,7 +23,7 @@ const App = (callback, deps) => {
   };
 
   const handleBackPress = useCallback(() => {
-    // const navigation = navigationRef.current;
+    const navigation = navigationRef.current;
 
     let routeName = navigation.getCurrentRoute();
 
@@ -42,12 +42,9 @@ const App = (callback, deps) => {
 
     let date = Date.now();
     setLastBackPressed(date);
-    message.warning({
-      content: '再次返回退出应用',
-      mask: false,
-    }); //提示再次按返回触发
+    message.warning('再次返回退出应用'); //提示再次按返回触发
     return true;
-  }, [lastBackPressed, navigation, rootRoute]);
+  }, [lastBackPressed, rootRoute]);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackPress);
@@ -68,16 +65,17 @@ const App = (callback, deps) => {
     }
     return function () {
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-      window.navigation = null;
     };
   }, [handleBackPress]);
 
   return (
-    <Provider store={store}>
-      <NavigationContainer ref={navigationRef}>
-        <Router />
-      </NavigationContainer>
-    </Provider>
+    <AntdProvider>
+      <Provider store={store}>
+        <NavigationContainer ref={navigationRef}>
+          <Router />
+        </NavigationContainer>
+      </Provider>
+    </AntdProvider>
   );
 };
 

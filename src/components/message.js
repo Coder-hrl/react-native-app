@@ -1,5 +1,6 @@
 import React from 'react';
-import {Dimensions, Modal, Text, Toast, View} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
+import {Toast, View, Flex, Modal} from '@ant-design/react-native';
 import IconSet from './IconSet';
 
 /**
@@ -27,61 +28,44 @@ const ModalToast = ({
     message ? (
       message
     ) : (
-      <Text style={{fontSize: 26, color: '#333333'}}>{text}</Text>
+      <View style={{fontSize: 16, color: '#333333'}}>{text}</View>
     ),
     footer,
     onBackHandler,
   );
 };
 
-const message = {
-  success(text = '') {
+const basicInfo = (color, type) => {
+  return text => {
     Toast.info({
       content: (
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <IconSet
-            style={{color: '#00cc66', fontSize: 20, marginRight: 5}}
-            name="duihao"
-          />
-          <Text style={{color: '#fff'}}>{text}</Text>
-        </View>
-      ),
-      mask: false,
-      stackable: true,
-      duration: 1.5,
-    });
-  },
-  error(text = '') {
-    Toast.info({
-      content: (
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <IconSet
-            style={{color: '#ff5b4d', fontSize: 20, marginRight: 5}}
-            name="jingshitishi"
-          />
-          <Text style={{color: '#fff'}}>{text}</Text>
-        </View>
+        <Flex align="center">
+          <IconSet style={[styles.messageIcon, {color}]} name={type} />
+          <View style={styles.messageContent}>{text}</View>
+        </Flex>
       ),
       mask: false,
       stackable: true,
       duration: 3,
     });
+  };
+};
+
+const message = {
+  success(text = '') {
+    basicInfo('#00cc66', 'chenggong')(text);
+  },
+  error(text = '') {
+    basicInfo('#ff5b4d', 'cuowu')(text);
   },
   warning(text = '') {
-    Toast.info({
-      content: (
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <IconSet
-            style={{color: '#fab933', fontSize: 20, marginRight: 5}}
-            name="jingshitishi"
-          />
-          <Text style={{color: '#fff'}}>{text}</Text>
-        </View>
-      ),
-      mask: false,
-      stackable: true,
-      duration: 1.5,
-    });
+    basicInfo('#fab933', 'jinggao')(text);
+  },
+  info(text = '') {
+    basicInfo('#e6e6e6', 'tishi')(text);
+  },
+  loading(text = 'Loading...') {
+    Toast.loading(text, 0);
   },
 };
 
@@ -133,5 +117,16 @@ const ConfirmToast = ({
     </Modal>
   );
 };
+
+const styles = StyleSheet.create({
+  messageIcon: {
+    fontSize: 20,
+    marginRight: 10,
+  },
+  messageContent: {
+    maxWidth: 320,
+    color: '#fff',
+  },
+});
 
 export {ModalToast, ConfirmToast, message};

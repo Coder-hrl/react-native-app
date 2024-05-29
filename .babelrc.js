@@ -11,7 +11,6 @@ module.exports = {
           router: './src/router',
           components: './src/components',
           assets: './src/assets',
-          images: './src/assets/images',
           fonts: './src/assets/fonts',
           AjaxMode: './AjaxMode.js',
         },

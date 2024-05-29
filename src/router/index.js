@@ -1,15 +1,19 @@
 import React, {useEffect} from 'react';
-import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {TouchableOpacity, StyleSheet} from 'react-native';
 import {View} from '@ant-design/react-native';
 
 import {
-  CardStyleInterpolators,
   createStackNavigator,
+  CardStyleInterpolators,
 } from '@react-navigation/stack';
 
 import {useNavigation} from '@react-navigation/native';
 import {Center, TabBar} from 'components';
 import routes from './router.config';
+import FastImage from 'react-native-fast-image';
+
+import start from 'assets/images/start.png';
+import {getItem} from 'config';
 
 const Stack = createStackNavigator();
 
@@ -17,14 +21,32 @@ const StartPage = () => {
   const navigation = useNavigation();
 
   // 假登录
-  const Login = () => {
-    navigation.navigate('Home');
+  const jumpLogin = () => {
+    navigation.push('Login');
   };
+
+  const jumpHome = () => {
+    navigation.push('Home');
+  };
+
+  useEffect(() => {
+    getItem('token').then(res => {
+      if (res) {
+        jumpHome();
+      } else {
+        jumpLogin();
+      }
+    });
+  }, []);
 
   return (
     <Center>
-      <Image source={require('images/start.png')} />
-      <TouchableOpacity onPress={Login} style={styles.entryIcon}>
+      <FastImage
+        source={start}
+        style={styles.bannerIcon}
+        onError={err => console.log(err)}
+      />
+      <TouchableOpacity onPress={jumpLogin} style={styles.entryIcon}>
         <View style={styles.entryText}>立即进入</View>
       </TouchableOpacity>
     </Center>
@@ -62,12 +84,16 @@ function Router() {
 const styles = StyleSheet.create({
   entryIcon: {
     marginTop: 20,
-    width: 200,
+    width: 160,
     height: 80,
-    borderRadius: 40,
+    borderRadius: 20,
     backgroundColor: '#D9ECFE',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  bannerIcon: {
+    width: 160,
+    height: 160,
   },
   entryText: {
     fontSize: 20,

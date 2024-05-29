@@ -1,26 +1,49 @@
 import {StyleSheet, StatusBar} from 'react-native';
 import {View} from '@ant-design/react-native';
 
-import WaterMark from './WaterMark';
-
-function LayoutWrapper({children, statusBarBgc = 'transparent'}) {
+function LayoutWrapper({
+  style,
+  children,
+  showBgc = true,
+  translucent = true,
+  statusBarBgc = 'transparent',
+}) {
   return (
-    <View style={styles.layout}>
+    <View
+      style={{
+        ...styles.layout,
+      }}>
       <StatusBar
         animated
         backgroundColor={statusBarBgc}
         barStyle="dark-content"
+        translucent={translucent}
       />
-      <View>{children}</View>
-      <WaterMark />
+      <View
+        style={
+          translucent
+            ? [
+                styles.wrapper,
+                {backgroundColor: showBgc ? '#F3FAFF' : 'transparent'},
+                style,
+              ]
+            : {}
+        }>
+        {children}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   layout: {
-    paddingHorizontal: 10,
+    flex: 1,
+  },
+  wrapper: {
+    marginTop: 36,
+    paddingHorizontal: 20,
     paddingVertical: 0,
+    flex: 1,
   },
 });
 

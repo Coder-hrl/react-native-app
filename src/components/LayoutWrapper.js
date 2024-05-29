@@ -8,13 +8,10 @@ function LayoutWrapper({
   translucent = true,
   statusBarBgc = 'transparent',
 }) {
-  const BGC = '#F3FAFF';
   return (
     <View
       style={{
         ...styles.layout,
-        ...style,
-        backgroundColor: showBgc ? BGC : '',
       }}>
       <StatusBar
         animated
@@ -22,20 +19,30 @@ function LayoutWrapper({
         barStyle="dark-content"
         translucent={translucent}
       />
-      <View style={translucent ? styles.wrapper : {}}>{children}</View>
+      <View
+        style={
+          translucent
+            ? [
+                styles.wrapper,
+                {backgroundColor: showBgc ? '#F3FAFF' : 'transparent'},
+                style,
+              ]
+            : {}
+        }>
+        {children}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   layout: {
-    paddingHorizontal: 20,
-    paddingVertical: 0,
-    paddingBottom: 20,
     flex: 1,
   },
   wrapper: {
     marginTop: 36,
+    paddingHorizontal: 20,
+    paddingVertical: 0,
     flex: 1,
   },
 });

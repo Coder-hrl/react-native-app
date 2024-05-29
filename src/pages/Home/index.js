@@ -29,7 +29,7 @@ function Home() {
   const [titleShow, setTitleShow] = useState(false);
 
   const fastJump = path => {
-    navigation.push(path);
+    navigation.navigate(path);
   };
 
   const onPgaeScroll = e => {

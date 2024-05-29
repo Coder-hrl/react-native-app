@@ -56,6 +56,13 @@ storage 管理 `@react-native-async-storage/async-storage`
 
 本项目所使用 hooks 使用 ahooks 进行完善开发
 
+## 实现功能
+
+1. 登录页面
+2. 首页
+3. 项目列表
+4. 项目详情
+
 ## 声明
 
 本项目仅用于自身学习开发记录，严禁商用！

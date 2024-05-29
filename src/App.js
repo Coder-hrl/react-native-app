@@ -1,8 +1,9 @@
 import {Provider} from 'react-redux';
-import {BackHandler, DevSettings, LogBox} from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
+import {BackHandler, DevSettings, LogBox} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
+import {Provider as AntdProvider} from '@ant-design/react-native';
 
 import Router from 'router';
 import store from 'store';
@@ -70,11 +71,13 @@ const App = () => {
   }, []);
 
   return (
-    <Provider store={store}>
-      <NavigationContainer ref={navigationRef}>
-        <Router />
-      </NavigationContainer>
-    </Provider>
+    <AntdProvider>
+      <Provider store={store}>
+        <NavigationContainer ref={navigationRef}>
+          <Router />
+        </NavigationContainer>
+      </Provider>
+    </AntdProvider>
   );
 };
 

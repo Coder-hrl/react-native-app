@@ -12,7 +12,7 @@ module.exports = {
           components: './src/components',
           assets: './src/assets',
           fonts: './src/assets/fonts',
-          AjaxMode: './AjaxMode.js',
+          url: './url.js',
         },
       },
     ],

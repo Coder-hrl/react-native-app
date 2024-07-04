@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 
-import {removeItem} from 'config';
+import {removeItem, setAjaxHeader} from 'config';
 import {
   Button,
   LayoutHeader,
@@ -38,6 +38,7 @@ function Mine() {
         {
           text: '确认',
           onPress: () => {
+            setAjaxHeader('');
             removeItem('token').then(res => {
               message.success('操作成功！');
               navigation.navigate('Login');

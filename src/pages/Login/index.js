@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {KeyboardAvoidingView, StyleSheet, TouchableOpacity} from 'react-native';
 import {Flex, View} from '@ant-design/react-native';
 
@@ -35,9 +35,10 @@ function Login({navigation = () => {}}) {
 
     setAjaxHeader('token');
     setItem('token', 'token').then(res => {
-      navigation.navigate('Home');
+      navigation.replace('Home');
     });
   };
+
   return (
     <LayoutWrapper showBgc={false} style={styles.loginWrapper}>
       <View style={styles.LeftIntroWrapper}>
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
     borderColor: '#ececec',
     borderWidth: 1,
     padding: 20,
+    marginTop: 30,
   },
   input: {
     flex: 1,
@@ -162,6 +164,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: '#8cc9bf',
+    color: '#fff',
   },
   passwordIconWrapper: {
     position: 'absolute',

@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "android": "yarn set original && react-native run-android",
+    "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
     "set": "node ./scripts/set.js",
-    "build": "node ./scripts/build.js"
+    "build": "yarn set prod && node ./scripts/build.js"
   },
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",

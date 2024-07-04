@@ -1,27 +1,15 @@
 import axios from 'axios';
 
-import AJAXMODE from 'AjaxMode';
+import url from 'url';
 import {message} from 'components';
-import {url, sfzh} from './app.config';
 
 import {removeItem, getItem, setItem} from './storage';
 // 通用接口请求地址路径
 
 axios.defaults.timeout = 30000;
 
-const setHeaderFunc = (appCredential, userCredential, ip) => {
-  axios.defaults.headers.common['userCredential'] =
-    encodeURIComponent(userCredential);
-  axios.defaults.headers.common['appCredential'] =
-    encodeURIComponent(appCredential);
-
-  window.baseURL = ip;
-};
-
-if (AJAXMODE !== 'agent') {
-  window.baseURL = axios.defaults.baseURL = url;
-  axios.defaults.headers.common['platform'] = 'app';
-}
+window.baseURL = axios.defaults.baseURL = url;
+axios.defaults.headers.common['platform'] = 'app';
 
 getItem('token').then(res => {
   if (res) {
@@ -36,87 +24,11 @@ getItem('token').then(res => {
 let timer;
 
 /**
- * @description  服务总线对接请求参数
- */
-
-const handleRequestParams = ({url, method, param = {}, token}) => {
-  return [
-    {
-      key: 'api',
-      relationOperator: '=',
-      value: url,
-    },
-    {
-      key: 'requestType',
-      relationOperator: '=',
-      value: method,
-    },
-    {
-      key: 'param',
-      relationOperator: '=',
-      value: typeof param === 'string' ? param : JSON.stringify(param),
-    },
-    {
-      key: 'plantform',
-      relationOperator: '=',
-      value: 'app',
-    },
-    {
-      key: 'token',
-      relationOperator: '=',
-      value: token,
-    },
-  ];
-};
-
-const transformRequestParams = config => {
-  const _config = JSON.parse(JSON.stringify(config));
-
-  let data = {
-    method: 'post',
-    messageId: Math.floor(Math.random() * 10000000000).toString(), // 用于请求标识
-    version: '1.0',
-    parameter: {
-      dataObjId: '370200000000-3-0100-aa459f5924f163e1ac12cef0477a4abf', //api ID标识
-      regionlismCode: '370200000000', // 370000000000,
-      networkCode: '3',
-      condition: {
-        keyValueList: handleRequestParams({
-          url: _config.url,
-          method: _config.method,
-          param: _config.method == 'get' ? _config.params : _config.data,
-          token: _config.headers['common']['token'],
-        }),
-        logicalOperate: 'and',
-        fields: 'code,message,data',
-      },
-      page: {
-        pageNo: 1,
-        pageSize: 10,
-      },
-    },
-  };
-
-  delete config.params;
-
-  config.data = data;
-  config.method = 'post';
-  config.url = window.baseURL;
-  config.headers['Content-Type'] = 'application/json;charset=UTF-8';
-
-  return config;
-};
-
-/**
  * @description  请求全局拦截
  * @param  {boolean} transFormData  post方法 true转form提交表单方式
  * */
 axios.interceptors.request.use(
   async config => {
-    if (AJAXMODE == 'agent') {
-      config = transformRequestParams(config);
-    }
-
     return config;
   },
   error => {
@@ -239,11 +151,7 @@ function ajax(ajaxData = {}) {
 
 // 设置axios默认的token值
 const setAjaxHeader = value => {
-  if (AJAXMODE !== 'agent') {
-    axios.defaults.headers.common['Authorization'] = value;
-  } else {
-    axios.defaults.headers.common['token'] = value;
-  }
+  axios.defaults.headers.common['Authorization'] = value;
 };
 
-export {ajax, setAjaxHeader, setHeaderFunc};
+export {ajax, setAjaxHeader};

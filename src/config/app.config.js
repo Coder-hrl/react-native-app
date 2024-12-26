@@ -1,9 +1,10 @@
 import Home from 'pages/Home';
-import ProjectManage from 'pages/ProjectManage';
+import FormDesign from 'pages/FormDesign';
 import Mine from 'pages/Mine';
 import WorkSpace from 'pages/WorkSpace';
 
 export const tabBarConfig = [
+  // 使用人数的查看，当前登录几人？
   {
     name: '首页',
     icon: 'shouye',
@@ -11,16 +12,16 @@ export const tabBarConfig = [
     component: Home,
   },
   {
-    name: '订单管理',
-    icon: 'dingdanguanli',
-    path: 'ProjectManage',
-    component: ProjectManage,
-  },
-  {
-    name: '工作台',
+    name: '功能演示',
     icon: 'gongzuotai',
     path: 'WorkSpace',
     component: WorkSpace,
+  },
+  {
+    name: '表单控制',
+    icon: 'dingdanguanli',
+    path: 'FormDesign',
+    component: FormDesign,
   },
   {
     name: '我的',

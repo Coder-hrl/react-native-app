@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
   },
   HomeScroll: {
     flex: 1,
+    paddingHorizontal: 20,
   },
   HomeTitleWrapper: {
     marginTop: 26,

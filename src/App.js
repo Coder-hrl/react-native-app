@@ -1,13 +1,15 @@
 import {Provider} from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 import React, {useEffect, useState, useRef} from 'react';
 import {BackHandler, DevSettings, LogBox} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
 import {Provider as AntdProvider} from '@ant-design/react-native';
+import NativeDevSettings from 'react-native/Libraries/NativeModules/specs/NativeDevSettings';
 
 import Router from 'router';
 import store from 'store';
 import {message} from 'components';
+import {useMount} from 'ahooks';
 
 const App = () => {
   const navigationRef = useRef();
@@ -69,6 +71,8 @@ const App = () => {
       window.navigation = null;
     };
   }, []);
+
+  useMount(() => SplashScreen.hide());
 
   return (
     <AntdProvider>

@@ -24,7 +24,7 @@ function LayoutWrapper({
           translucent
             ? [
                 styles.wrapper,
-                {backgroundColor: showBgc ? '#F3FAFF' : 'transparent'},
+                {backgroundColor: showBgc ? '#fff' : 'transparent'},
                 style,
               ]
             : {}
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     marginTop: 36,
-    paddingHorizontal: 20,
     paddingVertical: 0,
     flex: 1,
   },

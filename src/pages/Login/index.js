@@ -43,7 +43,7 @@ function Login({navigation = () => {}}) {
     <LayoutWrapper showBgc={false} style={styles.loginWrapper}>
       <View style={styles.LeftIntroWrapper}>
         <View style={styles.introduceTip}>Hey,</View>
-        <View style={styles.introduceTip}>Welcome to CoderhApp!</View>
+        <View style={styles.introduceTip}>Welcome to this demo platform!</View>
       </View>
       <View style={styles.rightIntroWrapper}>
         <View style={styles.introduceTip}>Login,</View>
@@ -98,9 +98,7 @@ function Login({navigation = () => {}}) {
         </Button>
       </View>
 
-      <View style={styles.bottomText}>
-        此项目仅供Coderh学习记录所用，请勿用于商业用途。
-      </View>
+      <View style={styles.bottomText}>此项目仅供Coderh学习记录所用</View>
     </LayoutWrapper>
   );
 }

@@ -2,13 +2,13 @@ import React from 'react';
 import {View} from '@ant-design/react-native';
 import {LayoutWrapper, LayoutHeader} from 'components';
 
-function ProjectManage() {
+function FormDesign() {
   return (
     <LayoutWrapper>
-      <LayoutHeader title="订单管理" hasBack={false} />
-      <View>订单管理</View>
+      <LayoutHeader title="表单设计" hasBack={false} />
+      <View>表单设计</View>
     </LayoutWrapper>
   );
 }
 
-export default ProjectManage;
+export default FormDesign;

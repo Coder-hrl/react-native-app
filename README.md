@@ -59,10 +59,9 @@ storage 管理 `@react-native-async-storage/async-storage`
 ## 实现功能
 
 1. 登录页面
-2. 首页
-3. 项目列表
-4. 项目详情
+2. TabBar
+3. react-native-splash-screen
 
 ## 声明
 
-本项目仅用于自身学习开发记录，严禁商用！
+本项目仅用于自身学习开发记录！
